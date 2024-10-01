@@ -1,0 +1,15 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "gusztavvargadr/ubuntu-server-2004-lts"
+  config.vm.hostname = "web-server"
+  config.vm.provider "VirtualBox" do |vb|
+    vb.memory = 3072
+    vb.cpus = 2
+    vb.name = "web-dbc"
+   end
+  config.vm.network "private_network", ip: "172.16.5.10"
+  config.vm.network "public_network", ip: "10.99.25.100"
+  config.vm.synced_folder "./html", "/var/www/html"
+end

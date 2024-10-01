@@ -1,0 +1,1 @@
+{"virtualbox":{"/var/www/html":{"guestpath":"/var/www/html","hostpath":"C:/Users/Alumno/Desktop/ASO/aso_dbc/UT01_Introduccion/Practicas/PR0103/html","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/Alumno/Desktop/ASO/aso_dbc/UT01_Introduccion/Practicas/PR0103","disabled":false,"__vagrantfile":true}}}
