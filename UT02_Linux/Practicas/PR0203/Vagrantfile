@@ -1,0 +1,10 @@
+Vagrant.configure("2") do |config|
+    config.vm.define "server1" do |m1|
+        m1.vm.box = "gusztavvargadr/ubuntu-server-2004-lts"
+        m1.vm.hostname = "server-dbc"
+        config.vm.provider "VirtualBox" do |vb|
+            vb.memory = 4096
+            vb.cpus = 4
+        end
+    end
+end
