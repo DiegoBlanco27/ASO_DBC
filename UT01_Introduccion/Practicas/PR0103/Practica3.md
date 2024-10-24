@@ -14,7 +14,6 @@
     - Para crear una pagina html en la maquina virtual tendremos que compartir una carpeta en la que crearemos el html para ello usaremos el comando `config.vm.synced_folder "/data"` en el Vagrantfile  
     - Para sincronizar una carpeta de la maquina con un directorio usaremos este comando: `config.vm.synced_folder "./html", "/var/www/html"`
     - Tras crear la pagina web, escribiremos en un buscador, por ejemplo Chrome la IP privada de la maquina, ya que esta conecta la maquina con el equipo.
-    - ![html](html/index.html)
 
 ![Principal](PaginaPrincipal.png) 
 ![Primera](PaginaImagen.png) 

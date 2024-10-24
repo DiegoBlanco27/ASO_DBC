@@ -12,5 +12,6 @@
      -  `config.vm.network "forwarded_port", guest: 22, host: 8080`
     Ahora tendremos un puerto del anfitrión conectado con cada maquina virtual.
 4. Para acceder a una de las maquinas desde el escritorio remoto tendremos que poner una dirección IP valiada y el puerto al que esta asignada la maquina, por ejemplo: 127.0.0.1:2200 para conectarse a la maquina server1
-5. El escritorio remoto no funcionaba 
-   ![Error](error.png)
+5. El escritorio remoto no funcionaba. 
+  
+  ![Error](error.png)
