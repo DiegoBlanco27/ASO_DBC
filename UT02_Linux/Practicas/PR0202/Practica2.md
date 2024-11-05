@@ -1,12 +1,14 @@
-# Guía Practica 2 (No acabada)
+# Guía Practica 2
 - Preparación de la maquina y configuración de la red.
 1. Para esta Practica usaremos un box de ubuntu llamado `generic/ubuntu2204`, tras instalarlo, en la interfaz de VirtualBox añadiremos otro adaptador de red, un adaptador solo anfitrión, que nos servira para interconectar el equipo con la maquina.
-2. En el Panel de Control > Centro de redes y recursos compartidos, seleccionaremos "Cambiar configuración del adaptador, seleccionamos el de VirtualBox y le daremos a "Detalles" para ver la dirección IP en mi caso; 192.168.56.1. En la maquina para ver la IP asignada tendremos que usar el comando `ip a`, y buscaremos el adaptador Solo anfitrión, mi dirección IP es; 127.0.0.1 .
+2. En el Panel de Control > Centro de redes y recursos compartidos, seleccionaremos "Cambiar configuración del adaptador, seleccionamos el de VirtualBox y le daremos a "Detalles" para ver la dirección IP en mi caso; 192.168.56.1. En la maquina para ver la IP asignada tendremos que usar el comando `ip a`, y buscaremos el adaptador Solo anfitrión, mi dirección IP es; 10.0.2.255 .
 3. Para comprobar la conectividad entre el anfitrión y la maquina haremos ping desde nuestro equipo a la maquina usando el comando `ping ` y luego haremos lo mismo desde la maquina al equipo con el comando `ping 192.168.56.1`.
 4. Para cambiar el hostname de la maquina a "server-dbc" usaremos el comando `sudo hostnamectl set-hostname 'server-dbc'`.
 - Creación del usuario y conexión SSH.
 1. Para crear un usuario usamos el comando `sudo adduser "nombre"` en este caso `sudo adduser dbc_server`. 
-2. "Pendiente"
-3. "Pendiente"
+2. Para que el usuario se pueda conectar a SSH mediante contraseña, debemos editar el archivo bash para ello usaremos el comando `sudo nano /etc/ssh/sshd_config`, dentro, modificaremos lo siguiente, en "PermitRootLogin" pondremos "no" y en "PasswordAuthentication" pondremos "yes", ahora reiniciaremos el servicio SSH para aplicar los cambios, usando el comando `sudo systemctl restart ssh`
+3. Para que la conexión se realice mediante un par de claves pública-privada de forma transparente, primero tendremos que generar el par de claves, para ello usaremos el comando `ssh-keygen -t rsa -b 4096` y guardaremos las claves en ~/.ssh/id_rsa, se generaran dos archivos: ~/.ssh/id_rsa, la clave privada y ~/.ssh/id_rsa.pub, la clave pública. Ahora, copiaremos la clave publica al anfitrion, para ello pondremos el comando `ssh-copy-id dbc_ssh@192.168.56.1`
 - Conexion transparente a Github.
-"Pendiente"
+En la terminal del equipo pondremos el comando `ssh-keygen -t rsa -b 4096 -C diegoblancor462@gmail.com` para generar un par de claves publica/privada asociadas al correo electronico que usamos en GitHub, las guardaremos en /.ssh/id_rsa y mostraremos la clave publica usando el comando `cat /.ssh/id_rsa.pub` y la copiaremos.
+Para poder conectarme a mi Github sin tener que introducir la contraseña, hay que ir al perfil > Settings > SSH and GPG keys, una vez alli le daremos a "New SSH key" e introduciremos la clave publica que generamos antes. 
+Comprobaremos que ha funcionado usando el comando `ssh -T git@github.com` para comprobar que hay conexión.
