@@ -24,66 +24,65 @@
   7. También mostraremos el tiempo que se ha tardado en realizar el escaneo usando `$SECONDS` que mostrara el tiempo transcurrido en segundos: `duracion=$SECONDS` `echo "Escaneo realizado en $duracion segundos."`
 
 ### Script
-`#!/bin/bash`
+#!/bin/bash
 
-`read -p "Introduce tu dirección IP:" IP`
+read -p "Introduce tu dirección IP:" IP
 
-`echo "Realizando ping a $IP ..."`
-`if ping -c 1 $IP &> /dev/null; then`
-    `echo "El equipo con IP $IP está activo."`
-`else`
-    `echo "No se recibió respuesta del equipo con IP $IP."`
-    `exit 1`
-`fi`
+echo "Realizando ping a $IP ..."
+if ping -c 1 $IP &> /dev/null; then
+    echo "El equipo con IP $IP está activo."
+else
+    echo "No se recibió respuesta del equipo con IP $IP."
+    exit 1
+fi
 
-`echo "Obteniendo la dirección MAC de $IP ..."`
-`mac_address=$(arp -n $IP | grep "$IP" | awk '{print $3}')`
+echo "Obteniendo la dirección MAC de $IP ..."
+mac_address=$(arp -n $IP | grep "$IP" | awk '{print $3}')
 
-`if [ -z "$mac_address" ]; then`
-    `mac_address="MAC no disponible"`
-`fi`
+if [ -z "$mac_address" ]; then
+    mac_address="MAC no disponible"
+fi
 
-`echo "Dirección MAC: $mac_address"`
+echo "Dirección MAC: $mac_address"
 
-`echo "Escaneando puertos abiertos en la dirección $IP..."`
-`puertos_abiertos=""`
-`for puerto in {1..1024}; do`
-    `nc -z -v 1 $IP $puerto &> /dev/null`
-    `if [ $? -eq 0 ]; then`
-        `servicio=$(grep -w $puerto /etc/services | awk '{print $1}' | head -n 1)`
-        `puertos_abiertos+="$puerto ($servicio)\n"`
-    `fi`
-`done`
+echo "Escaneando puertos abiertos en la dirección $IP..."
+puertos_abiertos=""
+for puerto in {1..1024}; do
+    nc -z -v 1 $IP $puerto &> /dev/null
+    if [ $? -eq 0 ]; then
+        servicio=$(grep -w $puerto /etc/services | awk '{print $1}' | head -n 1) 
+        puertos_abiertos+="$puerto ($servicio)\n"
+    fi
+done
 
-`if [ -z "$puertos_abiertos" ]; then`
-    `echo "No se encontraron puertos abiertos en el rango 1-1024."`
-`else`
-    `echo -e "Puertos abiertos encontrados:\n$puertos_abiertos"`
-`fi`
+if [ -z "$puertos_abiertos" ]; then
+    echo "No se encontraron puertos abiertos en el rango 1-1024."
+else
+    echo -e "Puertos abiertos encontrados:\n$puertos_abiertos"
+fi
 
-`echo "Identificando el sistema operativo..."`
-`TTL=$(ping -c 1 $IP | grep -oP "ttl=\K[0-9]+")`
-`if (( TTL >= 100 && TTL <= 128 )); then`
-    `so="Windows"`
-`elif (( TTL >= 30 && TTL <= 64 )); then`
-    `so="Linux"`
-`else`
-    `so="Desconocido"`
-`fi`
-`echo "Sistema operativo: $so"`
+echo "Identificando el sistema operativo..."
+TTL=$(ping -c 1 $IP | grep -oP "ttl=\K[0-9]+")
+if (( TTL >= 100 && TTL <= 128 )); then
+    so="Windows"
+elif (( TTL >= 30 && TTL <= 64 )); then
+    so="Linux"
+else
+    so="Desconocido"
+fi
+echo "Sistema operativo: $so"
 
-`read -p "Introduce el nombre del archivo para guardar la información: " archivo_salida`
-`echo "Guardando resultados en $archivo_salida..."`
+read -p "Introduce el nombre del archivo para guardar la información: " archivo_sa>echo "Guardando resultados en $archivo_salida..."
 
-`echo -e "Análisis de red para la IP $IP:\n" > $archivo_salida`
-`echo "Dirección MAC: $mac_address" >> $archivo_salida`
-`echo "Sistema operativo: $so" >> $archivo_salida`
-`echo -e "Puertos abiertos:\n$puertos_abiertos" >> $archivo_salida`
+echo -e "Análisis de red para la IP $IP:\n" > $archivo_salida
+echo "Dirección MAC: $mac_address" >> $archivo_salida
+echo "Sistema operativo: $so" >> $archivo_salida
 
-`duracion=$SECONDS`
+duracion=$SECONDS
 
-`echo "Análisis completado. Resultados guardados en $archivo_salida."`
-`echo "Escaneo realizado en $duracion segundos."`
+echo "Análisis completado. Resultados guardados en $archivo_salida."
+echo "Escaneo completado en $duracion segundos."
+echo "Resultados guardados en $archivo_salida."
 
 ### Pruebas
   - Los caracteres mostrados `de esta forma` son los introducidos por el usuario el resto los ha generado el script
